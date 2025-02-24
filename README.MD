@@ -1,0 +1,3 @@
+A linguagem escolhida foi o framework next js, por conta de alta demanda na empresa onde trabalho, além de ser bem otimizado para sistemas SSR(cujo é o escopo desse software)
+
+A aplicação consiste em um sistema de anotação online, onde terá sistema de autenticação, e um sistema de venda dessas anotações(caso dé tempo), onde ele se propoem no mvp um crud de notes e alguma transação simples entre usuarios(caso de tempo)
