@@ -14,17 +14,18 @@ O sistema deve ser desenvolvido em nextjs, na configuração de uma aplicação 
 e da biblioteca de autenticação auth.js,
 O banco de dados deve ser construído em mysql(mariaDb),
 O sistema deve utilizar a configuração de sessão do auth.js,
-A aplicação deve ser colocada em ambiente de produção através do Microsoft Azure
-A aplicação deve conter um sistema de ci/cd
-A aplicação deve ter controle de versionamento utilizando-se do GitHub
-O software deve utilizar a biblioteca tailwind
+A aplicação deve ser colocada em ambiente de produção através do Microsoft Azure,
+A aplicação deve conter um sistema de ci/cd,
+A aplicação deve ter controle de versionamento utilizando-se do GitHub,
+O software deve utilizar a biblioteca tailwind,
+O sistema deve priorizar o login rapido e duradouro, com o fim de reduzir o tempo de espera do usuario;
 
 Funcionais
 O sistema deve permitir a criação, inserção, edição e exclusão de textos,
 O sistema deve permitir a visualização de todos os textos salvos pelo usuário,
 O sistema deve ser capaz de trocar textos entre os usuários,
 O sistema deve ter a capacidade de salvar textos no frontend localmente,
-O sistema deve ter um histórico de trocas
+O sistema deve ter um histórico de trocas;
 
 Planejamento de atividades
 
