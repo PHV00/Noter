@@ -1,10 +1,9 @@
-import Image from "next/image";
-import Login from "./pages/Login/page";
+import Home from "./pages/Home/page";
 
 export default function Root() {
   return (
     <div>
-      <Login></Login>
+      <Home></Home>
     </div>
   );
 }
