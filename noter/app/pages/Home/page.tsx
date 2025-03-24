@@ -32,7 +32,6 @@ export default function Home(){
                         <input className="w-3/4 h-full pl-[1vw] focus:outline-none" placeholder="Try write something ..."></input>
                         <svg className="w-1/4 h-1/4" ></svg>
                     </div> */}
-
                 </div>
 
             </div>

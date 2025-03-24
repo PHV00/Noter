@@ -14,7 +14,7 @@ export default function Navbar() {
             </div>
             <div className="w-[5vw]">
                 <button 
-                  onClick={()=>{router.push("pages/eanotation")}}
+                  onClick={()=>{router.push("pages/Anotation")}}
                   className="w-full rounded-md bg-amber-200 p-1">
                   Sing In
                 </button>
