@@ -2,7 +2,7 @@
 
 import Navbar from "@/app/components/NavBar";
 import Image from "next/image";
-import LittleWriter from "../../../public/LittleWriter.svg";
+import LittleWriter from "../../../public/little_writer.svg";
 
 export default function Home(){
     
@@ -13,7 +13,7 @@ export default function Home(){
 
                 <div className="w-1/2 h-full flex flex-row justify-center">
                     <Image
-                    alt="little noter boy "
+                    alt="little noter boy"
                     quality={100}
                     src={LittleWriter}
                     width={500}
@@ -23,7 +23,7 @@ export default function Home(){
 
                 <div className="w-1/2 h-full">
                     <h1 className="text-center text-6xl font-bold">
-                        Wellcome to Noter
+                        Welcome to Noter
                     </h1>
                     <h2 className="mt-[5vw] text-center text-4xl w-11/12">
                         Your notes anywhere and anytime, click on Sign in to get started right now.    
