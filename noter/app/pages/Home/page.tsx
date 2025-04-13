@@ -3,14 +3,16 @@
 import Navbar from "@/app/components/NavBar";
 import Image from "next/image";
 import LittleWriter from "../../../public/little_writer.svg";
+import { useState } from "react";
+import LoginModal from "@/app/components/LoginLabel";
 
 export default function Home(){
-    
+    const [showLoginModal,setShowLoginModal] = useState(false);
+
     return (
         <div className="w-screen h-screen ">
-            <Navbar></Navbar>
+            <Navbar loginFunction={()=>{setShowLoginModal(true)}}></Navbar>
             <div className=" mt-[5vw] flex flex-row justify-center items-center">
-
                 <div className="w-1/2 h-full flex flex-row justify-center">
                     <Image
                     alt="little noter boy"
@@ -20,20 +22,26 @@ export default function Home(){
                     height={500}
                     className="border-2 border-black rounded-md object-cover"/>
                 </div>
-
                 <div className="w-1/2 h-full">
                     <h1 className="text-center text-6xl font-bold">
                         Welcome to Noter
                     </h1>
                     <h2 className="mt-[5vw] text-center text-4xl w-11/12">
-                        Your notes anywhere and anytime, click on Sign in to get started right now.    
+                        Your notes anywhere and anytime, click on Sign in to get started right now.
                     </h2>
                     {/* <div className="w-1/3 h-[3vw] justify-center rounded-md border-1 border-solid border-black flex flex-row">
                         <input className="w-3/4 h-full pl-[1vw] focus:outline-none" placeholder="Try write something ..."></input>
                         <svg className="w-1/4 h-1/4" ></svg>
                     </div> */}
                 </div>
-
+                {showLoginModal ? 
+                (
+                <>
+                    <LoginModal onClose={()=>{setShowLoginModal(false)}}></LoginModal>
+                </>
+                ):
+                (<></>)
+                }
             </div>
         </div>
     );

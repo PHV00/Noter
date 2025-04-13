@@ -2,9 +2,20 @@
 
 import { useRouter } from "next/navigation";
 import * as React from "react";
+import { signOut, useSession } from "next-auth/react";
 
-export default function Navbar() {
+export type NavBarProps = {
+  loginFunction?:()=>void;
+  logoutFunction?: ()=>void;
+}
+
+export default function NavBar({
+  loginFunction = ()=>{},
+  logoutFunction = ()=>{signOut();}
+}:NavBarProps) {
   const router = useRouter();
+
+  const { status } = useSession();
 
   return (
     <div className="w-full h-1/12 border-b-2">
@@ -12,13 +23,23 @@ export default function Navbar() {
             <div className="w-[5vw]">
                 <h1 onClick={()=>{router.push("/")}} className="italic font-bold text-2xl">Noter</h1>
             </div>
-            <div className="w-[5vw]">
-                <button 
-                  onClick={()=>{router.push("/pages/NewNotes")}}
-                  className="w-full rounded-md bg-amber-200 p-1">
-                  Sing In
-                </button>
-            </div>
+            {status == "unauthenticated" ? (
+              <div className="w-1/12 cursor-pointer">
+                  <button 
+                    onClick={()=>{loginFunction()}}
+                    className="w-full rounded-md bg-amber-200 p-1">
+                    SingIn
+                  </button>
+              </div>
+            ):(
+              <div className="w-1/12 cursor-pointer">
+                  <button 
+                    onClick={()=>{logoutFunction()}}
+                    className="w-full rounded-md bg-red-200 p-1">
+                    SingOut
+                  </button>
+              </div>
+            )}
         </div>
     </div>
   );
