@@ -21,10 +21,10 @@ export default function NavBar({
     <div className="w-full h-1/12 border-b-2">
         <div className="px-12 w-full h-full flex items-center justify-between">
             <div className="w-[5vw]">
-                <h1 onClick={()=>{router.push("/")}} className="italic font-bold text-2xl">Noter</h1>
+                <h1 onClick={()=>{router.push("/")}} className="italic font-bold text-2xl cursor-pointer">Noter</h1>
             </div>
             {status == "unauthenticated" ? (
-              <div className="w-1/12 cursor-pointer">
+              <div className="w-1/12 hover:scale-125 transition-all duration-200">
                   <button 
                     onClick={()=>{loginFunction()}}
                     className="w-full rounded-md bg-amber-200 p-1">
@@ -32,13 +32,22 @@ export default function NavBar({
                   </button>
               </div>
             ):(
-              <div className="w-1/12 cursor-pointer">
-                  <button 
-                    onClick={()=>{logoutFunction()}}
-                    className="w-full rounded-md bg-red-200 p-1">
-                    SingOut
-                  </button>
-              </div>
+              <>
+                <div className="w-1/12 hover:border-b-1">
+                    <button 
+                      onClick={()=>{router.push("/pages/ManagementNotes/")}}
+                      className="w-full cursor-pointe p-1 cursor-pointer">
+                      Your Notes
+                    </button>
+                </div>
+                <div className="w-1/12 hover:border-b-1 border-white">
+                    <button 
+                      onClick={()=>{logoutFunction()}}
+                      className="w-full cursor-pointer rounded-md bg-red-200 p-1">
+                      SingOut
+                    </button>
+                </div> 
+              </>
             )}
         </div>
     </div>

@@ -3,8 +3,10 @@
 import Navbar from "@/app/components/NavBar";
 import Image from "next/image";
 import LittleWriter from "../../../public/little_writer.svg";
+import LoginModal from "@/app/components/LoginModal";
+
 import { useState } from "react";
-import LoginModal from "@/app/components/LoginLabel";
+
 
 export default function Home(){
     const [showLoginModal,setShowLoginModal] = useState(false);

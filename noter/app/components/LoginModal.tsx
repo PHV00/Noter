@@ -1,10 +1,10 @@
 "use client";
+
 import * as React from "react";
 import Image from "next/image";
 import GoogleIcon from "../../public/GoogleIcon.svg"
 import GitHubIcon from "../../public/GithubIcon.svg";
 
-import { useRouter } from "next/navigation";
 import { signIn } from "next-auth/react";
 
 export type LoginModelProps ={
@@ -12,7 +12,6 @@ export type LoginModelProps ={
 }
 
 export default function LoginModal({onClose=()=>{}}:LoginModelProps) {
-  const router = useRouter();
 
   return (
     <div >
@@ -26,7 +25,7 @@ export default function LoginModal({onClose=()=>{}}:LoginModelProps) {
                     </button>
                 </div>
                 <div className="w-2/3 h-[10vh] flex flex-row border-1 border-solid border-black rounded-md bg-indigo-400">
-                    <button className="w-full h-full text-white flex items-center justify-center cursor-pointer" onClick={()=>{signIn("github")}}>
+                    <button className="w-full h-full text-white flex items-center justify-center cursor-pointer" onClick={()=>{signIn("github", { callbackUrl: "/pages/ManagementNotes/" })}}>
                         <Image src={GitHubIcon} alt="GitHub" width={27} height={27}></Image>
                     </button>
                 </div>

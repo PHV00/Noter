@@ -1,11 +1,16 @@
 "use client"
 
 import Navbar from "@/app/components/NavBar";
-import Image from "next/image";
-import LittleWriter from "../../../public/LittleWriter.svg";
+
+import { useSession } from "next-auth/react";
+import { redirect } from "next/navigation";
 
 export default function Home(){
+
+    const { status } = useSession();
     
+    if(status == "unauthenticated") redirect("/pages/Home");    
+
     return (
         <div className="w-screen h-screen ">
             <Navbar></Navbar>

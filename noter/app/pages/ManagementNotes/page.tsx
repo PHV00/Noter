@@ -1,16 +1,22 @@
-"use client"
+"use client";
 
 import Navbar from "@/app/components/NavBar";
 import Image from "next/image";
 import SearchIcon from "../../../public/search_icon.svg";
 import UpdateIcon from "../../../public/update_icon.svg";
 import DeleteIcon from "../../../public/delete_icon.svg";
-import router from "next/router";
 
 import { useState } from "react";
+import { useSession } from "next-auth/react";
+import { useRouter } from "next/navigation";
+import { redirect } from "next/navigation";
 
-export default function Home(){
-    
+export default function ManagementNotes(){
+    const router = useRouter();
+    const { status } = useSession();
+
+    if(status == "unauthenticated") redirect("/pages/Home");
+
     const [searchTerm, setSearchTerm] = useState("");
 
     const notes = [
@@ -32,11 +38,10 @@ export default function Home(){
     return (
         <div className="w-screen h-screen">
             <Navbar></Navbar>
-
             <div>
 
                 <div className=" mt-[5vw] w-full px-[20%] flex flex-row justify-between">
-                    <button className=" border-1 border-solid border-black rounded-md w-2/12 h-[5vh]" onClick={()=>{router.push("/pages/NewNotes")}}>New Note</button>
+                    <button className=" border-1 border-solid border-black rounded-md w-2/12 h-[5vh] cursor-pointer hover:scale-115 transition-all duration-200" onClick={()=>{router.push("/pages/NewNotes")}}>New Note</button>
                     <div className="w-4/12 h-[5vh] flex">
                         <Image src={SearchIcon}  alt="searchIcon" width={23} height={23} ></Image>
                         <input className="w-full p-[1vh] ml-[1vw] border-1 border-solid border-black rounded-md " placeholder="Search any field " value={searchTerm}></input>
@@ -78,12 +83,12 @@ export default function Home(){
                                     </div>
                                 </td>
                                 <td className="w-1/12">
-                                    <div className="flex items-center justify-center cursor-pointer hover:scale-125">
+                                    <div className="flex items-center justify-center cursor-pointer hover:scale-115 transition-all duration-200">
                                         <Image src={UpdateIcon} alt="updateIcon" width={23} height={23}></Image>
                                     </div>
                                 </td>
                                 <td className="w-1/12">
-                                    <div className="flex items-center justify-center cursor-pointer hover:scale-125">
+                                    <div className="flex items-center justify-center cursor-pointer hover:scale-115 transition-all duration-200">
                                         <Image onClick={(e)=>{
                                             // router.push("/pages/updateactivity/"+e.currentTarget.id.toString());}
                                             console.log(e.currentTarget.id.toString());
