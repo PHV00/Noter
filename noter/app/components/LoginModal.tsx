@@ -17,7 +17,7 @@ export default function LoginModal({onClose=()=>{}}:LoginModelProps) {
     <div >
         {/* if user click in darkness part, will close the modal, so to do this I set a state of showLoginModal with false to dont show this content */}
         <div className="fixed inset-0 flex items-center justify-center bg-black/40 z-10" onClick={()=>{onClose()}}>
-            <div className="w-1/3 h-1/2 flex flex-col items-center justify-around border-1 border-solid border-black rounded-md bg-white">
+            <div className="w-1/3 h-1/2 flex flex-row items-center justify-around border-1 border-solid border-black rounded-md bg-white">
                 <h1 className="w-full text-4xl font-bold text-center">Select a singIn method</h1>
                 <div className="w-2/3 h-[10vh] flex flex-row border-1 border-solid border-black rounded-md">
                     <button className="w-full h-full flex items-center justify-center cursor-pointer" onClick={()=>{console.log("Google")}}>

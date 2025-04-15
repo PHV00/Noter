@@ -10,6 +10,7 @@ import { useState } from "react";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import { redirect } from "next/navigation";
+import ConfirmModal from "@/app/components/ConfirmModal";
 
 export default function ManagementNotes(){
     const router = useRouter();
@@ -18,6 +19,7 @@ export default function ManagementNotes(){
     if(status == "unauthenticated") redirect("/pages/Home");
 
     const [searchTerm, setSearchTerm] = useState("");
+    const [showConfirmationModal,setConfirmModelState] = useState(false);
 
     const notes = [
         {
@@ -41,10 +43,10 @@ export default function ManagementNotes(){
             <div>
 
                 <div className=" mt-[5vw] w-full px-[20%] flex flex-row justify-between">
-                    <button className=" border-1 border-solid border-black rounded-md w-2/12 h-[5vh] cursor-pointer hover:scale-115 transition-all duration-200" onClick={()=>{router.push("/pages/NewNotes")}}>New Note</button>
+                    <button className=" border-1 border-solid border-black rounded-md w-2/12 h-[5vh] cursor-pointer hover:scale-105 duration-200" onClick={()=>{router.push("/pages/NewNote")}}>New Note</button>
                     <div className="w-4/12 h-[5vh] flex">
                         <Image src={SearchIcon}  alt="searchIcon" width={23} height={23} ></Image>
-                        <input className="w-full p-[1vh] ml-[1vw] border-1 border-solid border-black rounded-md " placeholder="Search any field " value={searchTerm}></input>
+                        <input type="text" name="search" onChange={(e) => setSearchTerm(e.target.value)} value={searchTerm} className="w-full p-[1vh] ml-[1vw] border-1 border-solid border-black rounded-md" placeholder="Search any field ..."></input>
                     </div>
                 </div>
 
@@ -60,11 +62,11 @@ export default function ManagementNotes(){
                             </tr>
                         </thead>
                         <tbody>
-                            {notes && notes.length > 0 ? (
+                            {/* {notes && notes.length > 0 ? (
                                 (notes).map((item, index) => (<>item</>))
                                 ):(
                                 <>Não</>
-                            )}
+                            )} */}
 
                             <tr className="rounded-md border-1 border-solid border-black" id="1">
                                 <td className="w-4/12">
@@ -84,14 +86,16 @@ export default function ManagementNotes(){
                                 </td>
                                 <td className="w-1/12">
                                     <div className="flex items-center justify-center cursor-pointer hover:scale-115 transition-all duration-200">
-                                        <Image src={UpdateIcon} alt="updateIcon" width={23} height={23}></Image>
+                                        <Image src={UpdateIcon} alt="updateIcon" width={23} height={23} onClick={(e)=>{
+                                            // router.push("/pages/updatenote/"+e.currentTarget.id.toString());}
+                                            router.push("/pages/UpdateNote/1");
+                                        }}></Image>
                                     </div>
                                 </td>
                                 <td className="w-1/12">
                                     <div className="flex items-center justify-center cursor-pointer hover:scale-115 transition-all duration-200">
-                                        <Image onClick={(e)=>{
-                                            // router.push("/pages/updateactivity/"+e.currentTarget.id.toString());}
-                                            console.log(e.currentTarget.id.toString());
+                                        <Image onClick={()=>{
+                                            setConfirmModelState(true);   
                                         }} 
                                         src={DeleteIcon} alt="deleteIcon" width={23} height={23} ></Image>
                                     </div>
@@ -99,6 +103,14 @@ export default function ManagementNotes(){
                             </tr>
                         </tbody>
                     </table>
+                     {showConfirmationModal ? 
+                    (
+                    <>
+                        <ConfirmModal onClose={()=>{setConfirmModelState(false)}} onCancel={()=>{setConfirmModelState(false)}}></ConfirmModal>
+                    </>
+                    ):
+                    (<></>)
+                    }
                 </div>
 
             </div>
