@@ -24,17 +24,19 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
-      {/* import Head from 'next/head'; */}
-      {/* <Head>
-        <link rel="icon" type="image/svg" href="../public/LittleWritter" />
-      </Head> */}
-      <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
-      >
-        <SessionProvider>{children}</SessionProvider>
-      </body>
-    </html>
+    <SessionProvider>
+      <html lang="en">
+        {/* import Head from 'next/head'; */}
+        {/* <Head>
+          <link rel="icon" type="image/svg" href="../public/LittleWritter" />
+        </Head> */}
+        <body
+          className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+        >
+          {children}
+        </body>
+      </html>
+    </SessionProvider>
   );
 }
 

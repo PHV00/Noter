@@ -17,7 +17,7 @@ model Annotation {
   id            Int             @id @default(autoincrement())
   title         String
   content       String            
-  creeatAt      DateTime        @default(now())
+  creatAt       DateTime        @default(now())
   updateAt      DateTime        @updatedAt
   
   userId        String          @unique

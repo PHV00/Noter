@@ -1,25 +1,30 @@
 "use client";
 
-import Navbar from "@/app/components/NavBar";
+import Navbar from "../../components/NavBar";
 import Image from "next/image";
 import SearchIcon from "../../../public/search_icon.svg";
 import UpdateIcon from "../../../public/update_icon.svg";
 import DeleteIcon from "../../../public/delete_icon.svg";
 
-import { useState } from "react";
+import { useLayoutEffect, useState } from "react";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import { redirect } from "next/navigation";
-import ConfirmModal from "@/app/components/ConfirmModal";
+import ConfirmModal from "../../components/ConfirmModal";
+import { IAnnotationManagement } from "../../lib/interfaces/interface";
+import { getAllAnnotationByUser } from "../../actions/annotationActions";
 
 export default function ManagementNotes(){
     const router = useRouter();
-    const { status } = useSession();
+
+    const { data: session, status } = useSession()
 
     if(status == "unauthenticated") redirect("/pages/Home");
 
     const [searchTerm, setSearchTerm] = useState("");
     const [showConfirmationModal,setConfirmModelState] = useState(false);
+
+    const [annotations,setAnnotations] = useState<IAnnotationManagement[]>([]);
 
     const notes = [
         {
@@ -29,6 +34,16 @@ export default function ManagementNotes(){
             lastUpdate:"12/05/2005"
         }
     ]
+
+    async function getAnnotations(userId:string) {
+        setAnnotations(await getAllAnnotationByUser(userId));
+    }
+
+    useLayoutEffect(()=>{
+        if(session?.user?.id){
+            getAnnotations(session?.user?.id);
+        }
+    },[])
 
     const filtredData = notes.filter(
         (note)=>
