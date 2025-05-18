@@ -2,9 +2,9 @@
 
 import Navbar from "../../components/NavBar";
 
-import { ICreateAnnotation } from "../../lib/interfaces/interface";
+import { IAnnotationValue } from "../../lib/interfaces/interface";
 import { createAnnotation } from "../../actions/annotationActions";
-import { creatAnnotationSchema, CreateAnnotationSchema } from "../../lib/schemas/schema";
+import { createAnnotationSchema, CreateAnnotationSchema } from "../../lib/schemas/createAnnotationSchema";
 
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
@@ -19,7 +19,7 @@ export default function NewNote(){
     
     const { data: session, status } = useSession()
 
-    function handleCreateAnnotation(data:ICreateAnnotation){
+    function handleCreateAnnotation(data:IAnnotationValue){
         if(session?.user?.id){
             createAnnotation(data.title,data.content,session?.user?.id);
         }
@@ -27,17 +27,17 @@ export default function NewNote(){
     
     useLayoutEffect(()=>{    
         if(status == "unauthenticated") redirect("/pages/Home");
-    })
+    },[])
 
     const { register, handleSubmit, formState:{errors} , clearErrors } = useForm<CreateAnnotationSchema>({
-        resolver: zodResolver(creatAnnotationSchema),
+        resolver: zodResolver(createAnnotationSchema),
     });
 
     return (
         <div className="w-screen h-screen ">
             <Navbar></Navbar>
             <div className=" mt-[5vw] flex flex-row justify-center items-center">
-                
+
                 <form onSubmit={handleSubmit(handleCreateAnnotation)} className="w-1/2 h-full">
                     <div>
                         <div className="w-full h-[3vw] justify-center rounded-md border-1 border-solid border-black flex flex-row">

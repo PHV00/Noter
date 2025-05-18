@@ -1,4 +1,4 @@
-export interface ICreateAnnotation {
+export interface IAnnotationValue {
     title : string;
     content : string;
 }
@@ -9,5 +9,9 @@ export interface IAnnotationManagement {
     content: string; 
     creatAt: Date; 
     updateAt: Date; 
-    userId: string;
+}
+export interface IAnnotationValueComplete {
+    id: number;
+    title : string;
+    content : string;
 }

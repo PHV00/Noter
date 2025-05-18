@@ -12,7 +12,7 @@ import { useRouter } from "next/navigation";
 import { redirect } from "next/navigation";
 import ConfirmModal from "../../components/ConfirmModal";
 import { IAnnotationManagement } from "../../lib/interfaces/interface";
-import { getAllAnnotationByUser } from "../../actions/annotationActions";
+import { deleteAnnotation, getAllAnnotationByUser } from "../../actions/annotationActions";
 
 export default function ManagementNotes(){
     const router = useRouter();
@@ -26,14 +26,7 @@ export default function ManagementNotes(){
 
     const [annotations,setAnnotations] = useState<IAnnotationManagement[]>([]);
 
-    const notes = [
-        {
-            id:1,
-            title:"The name of the bests films to see with a brother",
-            createAt:"06/05/2005",
-            lastUpdate:"12/05/2005"
-        }
-    ]
+    const [activitySelectedId,setActivitySelectedId] = useState<number>(0);
 
     async function getAnnotations(userId:string) {
         setAnnotations(await getAllAnnotationByUser(userId));
@@ -43,13 +36,15 @@ export default function ManagementNotes(){
         if(session?.user?.id){
             getAnnotations(session?.user?.id);
         }
-    },[])
+        // getAnnotations("cmakgeqqh0000hqh0u5y1ba9o");
+    },[session])
 
-    const filtredData = notes.filter(
-        (note)=>
-            note.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
-            note.createAt.includes(searchTerm.toLowerCase()) ||
-            note.lastUpdate.includes(searchTerm.toLowerCase())
+    const filtredData = annotations.filter(
+        (annotations)=>
+            annotations.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
+            annotations.content.includes(searchTerm.toLowerCase()) ||
+            annotations.creatAt.toISOString().includes(searchTerm) ||
+            annotations.updateAt.toISOString().includes(searchTerm)
     )
 
     return (
@@ -76,52 +71,57 @@ export default function ManagementNotes(){
                                 <th className="w-1/5">Delete</th>
                             </tr>
                         </thead>
-                        <tbody>
-                            {/* {notes && notes.length > 0 ? (
-                                (notes).map((item, index) => (<>item</>))
-                                ):(
-                                <>Não</>
-                            )} */}
-
-                            <tr className="rounded-md border-1 border-solid border-black" id="1">
-                                <td className="w-4/12">
-                                    <div className="flex items-center justify-center text-center">
-                                        The name of the bests films to see with a brother
-                                    </div>
-                                </td>
-                                <td className="w-1/12">
-                                    <div className="flex items-center justify-center">
-                                        05/02/2005
-                                    </div>
-                                </td>
-                                <td className="w-1/12">
-                                    <div className="flex items-center justify-center">
-                                        12/05/2005
-                                    </div>
-                                </td>
-                                <td className="w-1/12">
-                                    <div className="flex items-center justify-center cursor-pointer hover:scale-115 transition-all duration-200">
-                                        <Image src={UpdateIcon} alt="updateIcon" width={23} height={23} onClick={(e)=>{
-                                            // router.push("/pages/updatenote/"+e.currentTarget.id.toString());}
-                                            router.push("/pages/UpdateNote/1");
-                                        }}></Image>
-                                    </div>
-                                </td>
-                                <td className="w-1/12">
-                                    <div className="flex items-center justify-center cursor-pointer hover:scale-115 transition-all duration-200">
-                                        <Image onClick={()=>{
-                                            setConfirmModelState(true);   
-                                        }} 
-                                        src={DeleteIcon} alt="deleteIcon" width={23} height={23} ></Image>
-                                    </div>
-                                </td>
-                            </tr>
-                        </tbody>
+                            <tbody>
+                            {
+                                filtredData && filtredData.length > 0 ? (
+                                    (filtredData).map((item)=>(
+                                        <tr className="h-[8vh] rounded-md border-1 border-solid border-black" id={String(item.id)} key={String(item.id)}>
+                                            <td className="w-4/12">
+                                                <div className="flex items-center justify-center text-center">
+                                                    {item.title}
+                                                </div>
+                                            </td>
+                                            <td className="w-1/12">
+                                                <div className="flex items-center justify-center text-center">
+                                                    {item.creatAt.toLocaleDateString()}
+                                                </div>
+                                            </td>
+                                            <td className="w-1/12">
+                                                <div className="flex items-center justify-center text-center">
+                                                    {item.updateAt.toLocaleDateString()}
+                                                </div>
+                                            </td>
+                                            <td className="w-1/12">
+                                                 <div className="flex items-center justify-center cursor-pointer hover:scale-115 transition-all duration-200">
+                                                    <Image src={UpdateIcon} alt="updateIcon" width={23} height={23} onClick={(e)=>{
+                                                        // router.push("/pages/updatenote/"+e.currentTarget.id.toString());}
+                                                        router.push("/pages/UpdateNote/"+item.id);
+                                                    }}></Image>
+                                                </div>
+                                            </td>
+                                            <td className="w-1/12">
+                                                <div className="flex items-center justify-center cursor-pointer hover:scale-115 transition-all duration-200">
+                                                    <Image onClick={()=>{
+                                                        setActivitySelectedId(item.id);
+                                                        setConfirmModelState(true);
+                                                    }} 
+                                                    src={DeleteIcon} alt="deleteIcon" width={23} height={23} ></Image>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    ))
+                                ):( 
+                                    <tr className="w-[20vw] flex items-center justify-center text-center">
+                                        <td>No contents avaible</td>
+                                    </tr>
+                                )
+                            }
+                            </tbody>    
                     </table>
-                     {showConfirmationModal ? 
+                    {showConfirmationModal ? 
                     (
                     <>
-                        <ConfirmModal onClose={()=>{setConfirmModelState(false)}} onCancel={()=>{setConfirmModelState(false)}}></ConfirmModal>
+                        <ConfirmModal onClose={()=>{setConfirmModelState(false)}} onCancel={()=>{setConfirmModelState(false)}} onConfirm={() => deleteAnnotation(activitySelectedId)}></ConfirmModal>
                     </>
                     ):
                     (<></>)

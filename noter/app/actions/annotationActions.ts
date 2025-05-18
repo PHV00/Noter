@@ -1,5 +1,6 @@
 "use server"
 
+import { IAnnotationManagement, IAnnotationValue, IAnnotationValueComplete } from "../lib/interfaces/interface";
 import { prisma } from "../lib/prisma";
 
 export async function createAnnotation(
@@ -62,14 +63,14 @@ export async function deleteAnnotation(
     }
 }
 
-export async function getAllAnnotationByUser(userId : string){
+export async function getAllAnnotationByUser(userId : string) : Promise<IAnnotationManagement[]>{
     try {
-        const annotations = await prisma.annotation.findMany({
+        const annotations : IAnnotationManagement [] = await prisma.annotation.findMany({
             select:{
                 id : true,
                 title : true,
                 content : true,
-                creeatAt : true,
+                creatAt : true,
                 updateAt : true,
             },
             where:{
@@ -95,6 +96,36 @@ export async function getAnnotationByAnnotationId(userId : string,annotationId :
             }
         });
         return annotations;
+    } catch (error) {
+        throw error; 
+    } finally {
+        await prisma.$disconnect();
+    }
+}
+
+export async function getAnnotationById(annotationId : number) : Promise<IAnnotationValueComplete>{
+    try {
+        const annotations : IAnnotationValueComplete | null = await prisma.annotation.findUnique({
+            select:{
+                id:true,
+                title:true,
+                content:true
+            },
+            where:{
+                id:annotationId,
+            }
+        });
+
+        if(annotations){
+            return annotations;
+        }else{
+            return {
+                id:0,
+                title:"",
+                content:""
+            }
+        }
+
     } catch (error) {
         throw error; 
     } finally {

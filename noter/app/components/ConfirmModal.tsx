@@ -4,11 +4,11 @@ import * as React from "react";
 
 export type ConfirmModelProps ={
     onClose?: () => void ;
-    onConfirm?: ()=> void ;
+    onConfirm?: ()=> Promise<void>;
     onCancel?: ()=> void ;
 }
 
-export default function ConfirmModal({onClose=()=>{} , onConfirm= ()=>{} , onCancel=()=>{}}:ConfirmModelProps) {
+export default function ConfirmModal({onClose=()=>{} , onConfirm= async () => {}, onCancel=()=>{}}:ConfirmModelProps) {
 
   return (
     <div >
@@ -18,7 +18,7 @@ export default function ConfirmModal({onClose=()=>{} , onConfirm= ()=>{} , onCan
                 <h1 className="w-full text-2xl font-bold text-center">Do you confirm this action?(this action cannot be change!)</h1>
                 <div className="flex flex-row w-full justify-between px-[20%]">
                     <div className="w-1/3 h-[10vh] flex flex-row border-1 border-solid border-black rounded-md bg-amber-200 ">
-                        <button className="w-full h-full flex items-center justify-center cursor-pointer" onClick={()=>{onConfirm}}>
+                        <button className="w-full h-full flex items-center justify-center cursor-pointer" onClick={()=>{onConfirm();window.location.reload();}}>
                             Yes
                         </button>
                     </div>
